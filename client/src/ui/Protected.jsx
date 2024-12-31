@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import { LoaderCircle } from "lucide-react";
 import { Navigate } from "react-router-dom";
 
 function Protected({ children }) {
@@ -17,7 +16,7 @@ function Protected({ children }) {
   );
 
   if (isCheckingAuth) {
-    return <LoaderCircle className="animate-spin" />;
+    return <div className="skeleton flex-grow"></div>;
   }
   return authUser ? children : <Navigate to="/login" />;
 }

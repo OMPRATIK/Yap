@@ -11,11 +11,13 @@ function LoginPage() {
     password: "",
   });
   const { login, isLoggingIn } = useAuthStore();
+
   function handleSubmit(e) {
     e.preventDefault();
 
     login(formData);
   }
+
   return (
     <div className="grid lg:grid-cols-2 flex-grow">
       {/* LEFT SIDE */}

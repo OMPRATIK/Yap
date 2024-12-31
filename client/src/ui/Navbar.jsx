@@ -12,13 +12,16 @@ function Navbar() {
       <div className="flex-1 flex gap-2">
         <div className="flex justify-between flex-col items-center gap-4">
           <div className="flex flex-col items-center gap-4 group">
-            <div className="size-8 sm:size-10 rounded-xl bg-primary/10 flex items-center justify-center ">
-              <User className="size-4 sm:size-6 text-primary" />
+            <div className="size-8 sm:size-10 rounded-xl bg-primary/10 flex items-center justify-center hover:bg-primary/20 transition-colors">
+              <Link to="/">
+                <User className="size-4 sm:size-6 text-primary" />
+              </Link>
             </div>
           </div>
         </div>
         <span className="text-primary text-lg font-semibold">Yap!</span>
       </div>
+
       <div className="flex-none gap-1 sm:gap-2">
         {authUser && (
           <NavLink
@@ -29,7 +32,7 @@ function Navbar() {
               } flex gap-1.5 items-center hover:bg-base-200 transition-colors duration-300 px-2.5 py-1.5 rounded-md`
             }
           >
-            <MessagesSquare className="sm:size-4" />
+            <MessagesSquare className="size-4 sm:size-4" />
             <span className="hidden sm:block">Messages</span>
           </NavLink>
         )}
@@ -42,7 +45,7 @@ function Navbar() {
             } flex gap-1.5 items-center hover:bg-base-200 transition-colors duration-300 px-2.5 py-1.5 rounded-md`
           }
         >
-          <Settings className="sm:size-4" />
+          <Settings className="size-4 sm:size-4" />
           <span className="hidden sm:block">Settings</span>
         </NavLink>
         {authUser && (
@@ -53,7 +56,7 @@ function Navbar() {
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <div className="rounded-full">
+                <div className="rounded-full size-10">
                   {authUser.profilePic ? (
                     <img alt="User profile picture" src={authUser.profilePic} />
                   ) : (

@@ -8,13 +8,15 @@ import ProfilePage from "./pages/ProfilePage";
 import Protected from "./ui/Protected";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/useAuthStore";
+import { useThemeStore } from "./store/useThemeStore";
 import Layout from "./ui/Layout";
 
 function App() {
   const { authUser } = useAuthStore();
+  const { theme } = useThemeStore();
 
   return (
-    <div data-theme="business">
+    <div data-theme={theme}>
       <Routes>
         <Route element={<Layout />}>
           <Route
