@@ -18,7 +18,6 @@ const PREVIEW_MESSAGES = [
 
 function SettingsPage() {
   const { theme, setTheme } = useThemeStore();
-  console.log(theme);
   return (
     <div className="w-full px-4 py-6">
       <div className="mx-auto max-w-5xl space-y-10">
@@ -74,7 +73,7 @@ function SettingsPage() {
           <div className="p-4 sm:p-6 bg-base-200 rounded-md">
             <div className="max-w-lg mx-auto">
               {/* Mock Chat UI */}
-              <div className="bg-base-100 rounded-xl shadow-sm overflow-hidden">
+              <div className="bg-base-100 rounded-md shadow-sm overflow-hidden">
                 {/* Chat Header */}
                 <div className="px-4 py-3 border-b border-base-300 bg-base-100">
                   <div className="flex items-center gap-3">
@@ -103,7 +102,7 @@ function SettingsPage() {
                     >
                       <div
                         className={`
-                          max-w-[80%] rounded-xl p-3 shadow-sm
+                          max-w-[80%] rounded-md p-3 shadow-sm
                           ${
                             message.isSent
                               ? "bg-primary text-primary-content"

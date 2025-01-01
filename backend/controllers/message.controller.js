@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import Message from "../models/message.model.js";
+import User from "../models/user.model.js";
 
 export const getUsers = async (req, res) => {
   const loggedInUserId = req.user._id;
@@ -8,7 +9,7 @@ export const getUsers = async (req, res) => {
     _id: { $ne: loggedInUserId },
   }).select("-password");
 
-  res.status(StatusCodes.OK).json({ users: filteredUsers });
+  res.status(StatusCodes.OK).json(filteredUsers);
 };
 
 export const getMessages = async (req, res) => {
