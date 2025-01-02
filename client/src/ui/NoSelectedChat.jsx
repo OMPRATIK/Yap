@@ -2,7 +2,7 @@ import { MessagesSquare } from "lucide-react";
 
 function NoSelectedChat() {
   return (
-    <div className="flex items-center flex-col justify-center w-full">
+    <div className="flex-grow flex items-center flex-col justify-center">
       <div className="flex justify-center">
         <div className="p-3 bg-base-200 rounded-md animate-bounce">
           <MessagesSquare className="size-8" />

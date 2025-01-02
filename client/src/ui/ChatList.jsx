@@ -5,16 +5,20 @@ import { Contact } from "lucide-react";
 import DefaultProfilePic from "./DefaultProfilePic";
 
 function ChatList() {
-  const { users, getUsers, isUsersLoading, setSelectedUser, selectedUser } =
-    useChartStore();
+  const {
+    onlineUsers,
+    users,
+    getUsers,
+    isUsersLoading,
+    setSelectedUser,
+    selectedUser,
+  } = useChartStore();
 
-  console.log(users);
   useEffect(
     function () {
       async function fetchUsers() {
         await getUsers();
       }
-
       fetchUsers();
     },
     [getUsers]
@@ -25,15 +29,15 @@ function ChatList() {
   }
 
   return (
-    <aside className="space-y-2">
+    <aside className="space-y-2 pb-8">
       <div className="flex gap-1.5 items-center">
         <Contact className="size-5" />
-        <h2 className="text-lg font-semibold">Contacts</h2>
+        <h2 className="text-xl font-semibold">Contacts</h2>
       </div>
       <div className="flex flex-col gap-1.5 h-full overflow-y-scroll">
         {users.map((user) => (
           <button
-            className={`pr-9 flex gap-3 items-center p-2 rounded-md hover:bg-base-200 transition-colors duration-300 ${
+            className={`pr-16 pl-3 text-start flex gap-1.5 py-3 rounded-tl-md rounded-bl-md hover:bg-base-200 transition-colors duration-300 ${
               user === selectedUser && "bg-base-200"
             }`}
             key={user._id}
@@ -48,6 +52,7 @@ function ChatList() {
             )}
             <div>
               <p className="">{user.fullName}</p>
+              <p className="text-xs">Online</p>
             </div>
           </button>
         ))}

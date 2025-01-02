@@ -2,11 +2,22 @@ import { MessagesSquare, Settings, User } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import DefaultProfilePic from "./DefaultProfilePic";
+import { useEffect } from "react";
 
 function Navbar() {
-  const { logout, authUser } = useAuthStore();
-
+  const { logout, authUser, checkAuth, isCheckingAuth } = useAuthStore();
   const navigate = useNavigate();
+
+  useEffect(
+    function () {
+      async function fetchAuth() {
+        await checkAuth();
+      }
+      fetchAuth();
+    },
+    [checkAuth]
+  );
+
   return (
     <header className="navbar bg-base-100 border-b-[1px] border-neutral px-4 sm:px-6 py-0 fixed z-[1]">
       <div className="flex-1 flex gap-2">
@@ -23,7 +34,9 @@ function Navbar() {
       </div>
 
       <div className="flex-none gap-1 sm:gap-2">
-        {authUser && (
+        {isCheckingAuth ? (
+          <span className="loading loading-spinner loading-sm"></span>
+        ) : (
           <NavLink
             to="/"
             className={({ isActive }) =>
