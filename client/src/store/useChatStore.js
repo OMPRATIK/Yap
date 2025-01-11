@@ -2,12 +2,12 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../utils/axios";
 
-export const useChartStore = create((set) => ({
+export const useChartStore = create((set, get) => ({
   messages: [],
   users: [],
-  selectedUser: null,
-  isUsersLoading: false,
+  isUsersLoading: true,
   isMessagesLoading: false,
+  selectedUser: null,
   onlineUsers: [],
 
   getUsers: async () => {
@@ -35,6 +35,19 @@ export const useChartStore = create((set) => ({
       set({ isMessagesLoading: false });
     }
   },
+  sendMessage: async (messageData) => {
+    const { selectedUser, messages } = get();
 
-  setSelectedUser: (selectedUser) => set({ selectedUser }),
+    try {
+      const res = await axiosInstance.post(
+        `/messages/${selectedUser._id}`,
+        messageData
+      );
+      set({ messages: [...messages, res.data] });
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  },
+  setSelectedUser: (user) => set({ selectedUser: user }),
 }));

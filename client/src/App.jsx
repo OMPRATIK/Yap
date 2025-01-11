@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/useAuthStore";
 import { useThemeStore } from "./store/useThemeStore";
 import Layout from "./ui/Layout";
+import Chat from "./ui/Chat";
 
 function App() {
   const { authUser } = useAuthStore();
@@ -20,13 +21,15 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route
-            index
+            path="/"
             element={
               <Protected>
                 <HomePage />
               </Protected>
             }
-          />
+          >
+            <Route path=":userId" element={<Chat />} />
+          </Route>
           <Route
             path="profile"
             element={

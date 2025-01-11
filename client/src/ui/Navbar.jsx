@@ -2,10 +2,11 @@ import { MessagesSquare, Settings, User } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import DefaultProfilePic from "./DefaultProfilePic";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function Navbar() {
   const { logout, authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const [activeTab, setActiveTab] = useState("messages");
   const navigate = useNavigate();
 
   useEffect(
@@ -37,26 +38,26 @@ function Navbar() {
         {isCheckingAuth ? (
           <span className="loading loading-spinner loading-sm"></span>
         ) : (
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `${
-                isActive && "bg-base-200"
-              } flex gap-1.5 items-center hover:bg-base-200 transition-colors duration-300 px-2.5 py-1.5 rounded-md`
-            }
-          >
-            <MessagesSquare className="size-4 sm:size-4" />
-            <span className="hidden sm:block">Messages</span>
-          </NavLink>
+          authUser && (
+            <NavLink
+              to="/"
+              className={`${
+                activeTab === "messages" && "bg-base-200"
+              } flex gap-1.5 items-center hover:bg-base-200 transition-colors duration-300 px-2.5 py-1.5 rounded-md`}
+              onClick={() => setActiveTab("messages")}
+            >
+              <MessagesSquare className="size-4 sm:size-4" />
+              <span className="hidden sm:block">Messages</span>
+            </NavLink>
+          )
         )}
 
         <NavLink
           to="/settings"
-          className={({ isActive }) =>
-            `${
-              isActive && "bg-base-200"
-            } flex gap-1.5 items-center hover:bg-base-200 transition-colors duration-300 px-2.5 py-1.5 rounded-md`
-          }
+          className={`${
+            activeTab === "settings" && "bg-base-200"
+          } flex gap-1.5 items-center hover:bg-base-200 transition-colors duration-300 px-2.5 py-1.5 rounded-md`}
+          onClick={() => setActiveTab("settings")}
         >
           <Settings className="size-4 sm:size-4" />
           <span className="hidden sm:block">Settings</span>
