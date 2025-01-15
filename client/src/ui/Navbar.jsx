@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 
 function Navbar() {
   const { logout, authUser, checkAuth, isCheckingAuth } = useAuthStore();
-  const [activeTab, setActiveTab] = useState("messages");
+  const [activeTab, setActiveTab] = useState("/");
   const navigate = useNavigate();
+  const url = window.location.pathname;
 
   useEffect(
     function () {
@@ -17,6 +18,13 @@ function Navbar() {
       fetchAuth();
     },
     [checkAuth]
+  );
+
+  useEffect(
+    function () {
+      if (url !== "/settings" && !authUser) setActiveTab("/");
+    },
+    [authUser, url]
   );
 
   return (
@@ -42,9 +50,9 @@ function Navbar() {
             <NavLink
               to="/"
               className={`${
-                activeTab === "messages" && "bg-base-200"
+                activeTab === "/" && "bg-base-200"
               } flex gap-1.5 items-center hover:bg-base-200 transition-colors duration-300 px-2.5 py-1.5 rounded-md`}
-              onClick={() => setActiveTab("messages")}
+              onClick={() => setActiveTab("/")}
             >
               <MessagesSquare className="size-4 sm:size-4" />
               <span className="hidden sm:block">Messages</span>

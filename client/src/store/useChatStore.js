@@ -17,7 +17,7 @@ export const useChartStore = create((set, get) => ({
       set({ users: data });
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(error.response.data.msg);
     } finally {
       set({ isUsersLoading: false });
     }
@@ -30,7 +30,7 @@ export const useChartStore = create((set, get) => ({
       set({ messages: data });
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(error.response.data.msg);
     } finally {
       set({ isMessagesLoading: false });
     }
@@ -40,13 +40,13 @@ export const useChartStore = create((set, get) => ({
 
     try {
       const res = await axiosInstance.post(
-        `/messages/${selectedUser._id}`,
+        `/messages/send/${selectedUser._id}`,
         messageData
       );
       set({ messages: [...messages, res.data] });
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(error.response.data.msg);
     }
   },
   setSelectedUser: (user) => set({ selectedUser: user }),

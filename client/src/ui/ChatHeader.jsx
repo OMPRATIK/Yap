@@ -7,7 +7,7 @@ function ChatHeader() {
   const { selectedUser, setSelectedUser } = useChartStore();
 
   return (
-    <div className="flex items-center gap-1.5 border-b-[1px] border-b-base-200 py-2">
+    <div className="flex items-center gap-1.5 border-b-[1px] border-b-base-200 sm:py-2 py-1.5 px-1">
       <Link
         to="/"
         onClick={() => setSelectedUser(null)}

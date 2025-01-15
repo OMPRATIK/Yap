@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
-
+import cloudianry from "../utils/cloudinary.util.js";
 export const getUsers = async (req, res) => {
   const loggedInUserId = req.user._id;
 

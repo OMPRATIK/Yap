@@ -1,18 +1,23 @@
 import { create } from "zustand";
 import { axiosInstance } from "../utils/axios";
 import toast from "react-hot-toast";
+import { io } from "socket.io-client";
 
-export const useAuthStore = create((set) => ({
+const BASE_URL = "http://localhost:3000";
+
+export const useAuthStore = create((set, get) => ({
   authUser: null,
   isSigningUp: false,
   isLoggingIn: false,
   isCheckingAuth: true,
   isUpdatingProfile: false,
+  socket: null,
 
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("/auth/check");
       set({ authUser: res.data });
+      get().connectSocket();
     } catch (err) {
       console.log("Error is checking auth : ", err);
       set({ authUser: null });
@@ -27,6 +32,8 @@ export const useAuthStore = create((set) => ({
       console.log(res);
       set({ authUser: res.data });
       toast.success("Account created successfully!");
+
+      get().connectSocket();
     } catch (err) {
       toast.error(err.response.data.msg);
       console.log("Error in signup : ", err);
@@ -40,6 +47,8 @@ export const useAuthStore = create((set) => ({
       const res = await axiosInstance.post("/auth/login", formData);
       set({ authUser: res.data });
       toast.success("Logged in successfully!");
+
+      get().connectSocket();
     } catch (err) {
       console.log("Error in login : ", err);
       toast.error(err.response.data.msg);
@@ -50,6 +59,7 @@ export const useAuthStore = create((set) => ({
   logout: async () => {
     try {
       await axiosInstance.post("/auth/logout");
+      get().disconnectSocket();
       set({ authUser: null });
       toast.success("Logged out successfully!");
     } catch (err) {
@@ -68,6 +78,20 @@ export const useAuthStore = create((set) => ({
       toast.error(err.response.data.msg);
     } finally {
       set({ isUpdatingProfile: false });
+    }
+  },
+  connectSocket: () => {
+    const { authUser } = get();
+    if (!authUser || get().socket?.connected) return;
+
+    const socket = io(BASE_URL);
+    socket.connect();
+
+    set({ socket: socket });
+  },
+  disconnectSocket: () => {
+    if (get().socket?.connected) {
+      get().socket.disconnect();
     }
   },
 }));

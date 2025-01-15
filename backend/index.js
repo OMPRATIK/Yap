@@ -11,8 +11,9 @@ import messageRoute from "./routes/message.route.js";
 import errorHandlerMiddleware from "./middlewares/errorHandler.middleware.js";
 import notFoundMiddleware from "./middlewares/notFoud.middleware.js";
 
+import { app, server } from "./socket.js";
+
 const PORT = process.env.PORT;
-const app = express();
 
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(express.json());
@@ -27,7 +28,7 @@ app.use(errorHandlerMiddleware);
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
-    app.listen(PORT, () => console.log(`App is listening on port ${PORT}`));
+    server.listen(PORT, () => console.log(`App is listening on port ${PORT}`));
   } catch (error) {
     console.error(error);
   }

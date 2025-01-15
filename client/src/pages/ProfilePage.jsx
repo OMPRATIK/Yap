@@ -6,7 +6,6 @@ function ProfilePage() {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
 
   function handleImageUpload(e) {
-    console.log(e.target.files);
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();

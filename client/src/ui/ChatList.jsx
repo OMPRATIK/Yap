@@ -22,18 +22,18 @@ function ChatList() {
   );
 
   return (
-    <aside className="space-y-2 pb-8 w-full sm:w-auto">
-      <div className="flex gap-1.5 items-center">
+    <aside className="space-y-2 pb-20 w-full sm:w-auto border-r-[1px] border-base-200">
+      <div className="flex gap-1.5 items-center py-3.5 justify-center border-b-[1px] border-base-200">
         <Contact className="size-5" />
         <h2 className="text-xl font-semibold">Contacts</h2>
       </div>
-      <div className="flex flex-col gap-1.5 h-full overflow-y-scroll">
+      <div className="scrollbar-thin scrollbar-thumb-neutral/50 scrollbar-track-base-100 flex flex-col gap-1.5 h-full overflow-y-scroll pl-2">
         {isUsersLoading ? (
           <ChatListSkeleton />
         ) : (
           users.map((user) => (
             <button
-              className={`pr-16 pl-3 text-start flex gap-1.5 py-3 rounded-tl-md rounded-bl-md hover:bg-base-200 transition-colors duration-300 ${
+              className={`pr-28 pl-3 text-start flex gap-1.5 py-3 rounded-tl-md rounded-bl-md hover:bg-base-200 transition-colors duration-300 ${
                 user._id === userId && "bg-base-200"
               }`}
               key={user._id}
