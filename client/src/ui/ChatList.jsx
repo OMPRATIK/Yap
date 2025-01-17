@@ -99,11 +99,33 @@ function ChatList() {
                 }}
               >
                 {user.profilePic ? (
-                  <div className="size-10 rounded-full overflow-hidden">
-                    <img src={user.profilePic} alt={user.fullName + "pic"} />
+                  <div className="relative">
+                    <div
+                      className={`size-3 absolute ${
+                        onlineUsers.includes(user._id)
+                          ? "bg-green-500"
+                          : "bg-red-500"
+                      } top-0 right-0 rounded-full border-[1px]`}
+                    />
+                    <div className="overflow-hidden size-10 rounded-full ">
+                      <img
+                        src={user.profilePic}
+                        alt={user.fullName + "pic"}
+                        className="rounded-full w-10"
+                      />
+                    </div>
                   </div>
                 ) : (
-                  <DefaultProfilePic fullName={user.fullName} type="nav" />
+                  <div className="relative">
+                    <div
+                      className={`z-50 size-3 absolute ${
+                        onlineUsers.includes(user._id)
+                          ? "bg-green-500"
+                          : "bg-red-500"
+                      } top-0 right-0 rounded-full border-[1px]`}
+                    />
+                    <DefaultProfilePic fullName={user.fullName} type="nav" />
+                  </div>
                 )}
                 <div>
                   <p className="">{user.fullName}</p>
