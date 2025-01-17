@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useChartStore } from "../store/useChatStore";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import MessageSkeleton from "./skeleton/MessageSkeleton";
@@ -9,15 +9,33 @@ import formatMessageTime from "../utils/dateFormat";
 
 function Chat() {
   const { userId } = useParams();
-  const { messages, getMessages, isMessagesLoading, selectedUser } =
-    useChartStore();
+  const {
+    messages,
+    getMessages,
+    isMessagesLoading,
+    selectedUser,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  } = useChartStore();
   const { authUser } = useAuthStore();
+
+  const messageRef = useRef();
 
   useEffect(
     function () {
       getMessages(userId);
+      subscribeToMessages();
+
+      return () => unsubscribeFromMessages();
     },
-    [userId, getMessages]
+    [userId, getMessages, subscribeToMessages, unsubscribeFromMessages]
+  );
+
+  useEffect(
+    function () {
+      messageRef.current?.scrollIntoView({ behavior: "smooth" });
+    },
+    [messages]
   );
 
   return (
@@ -46,7 +64,7 @@ function Chat() {
                 >
                   <div
                     className={`${
-                      message.senderId === authUser._id ? "bg-primary" : ""
+                      message.senderId === authUser._id ? "bg-primary/65" : ""
                     } chat-bubble space-y-1`}
                   >
                     <div className="space-y-1.5">
@@ -67,6 +85,7 @@ function Chat() {
                         </p>
                       )}
                     </div>
+                    <div ref={messageRef} />
                     <time
                       className={`text-xs opacity-75 flex justify-end ${
                         message.senderId === authUser._id &&

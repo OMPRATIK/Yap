@@ -1,14 +1,14 @@
 import { create } from "zustand";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../utils/axios";
+import { useAuthStore } from "./useAuthStore";
 
 export const useChartStore = create((set, get) => ({
   messages: [],
   users: [],
   isUsersLoading: true,
   isMessagesLoading: false,
-  selectedUser: null,
-  onlineUsers: [],
+  selectedUser: JSON.parse(localStorage.getItem("selectedUserChatApp")) || null,
 
   getUsers: async () => {
     set({ isUsersLoading: true });
@@ -17,6 +17,7 @@ export const useChartStore = create((set, get) => ({
       set({ users: data });
     } catch (error) {
       console.log(error);
+
       toast.error(error.response.data.msg);
     } finally {
       set({ isUsersLoading: false });
@@ -49,5 +50,23 @@ export const useChartStore = create((set, get) => ({
       toast.error(error.response.data.msg);
     }
   },
-  setSelectedUser: (user) => set({ selectedUser: user }),
+  subscribeToMessages: () => {
+    const { selectedUser } = get();
+    if (!selectedUser) return;
+
+    const socket = useAuthStore.getState().socket;
+
+    socket.on("newMessage", (newMessage) => {
+      if (newMessage.senderId !== selectedUser._id) return;
+      set({ messages: [...get().messages, newMessage] });
+    });
+  },
+  unsubscribeFromMessages: () => {
+    const socket = useAuthStore.getState().socket;
+    socket.off("newMessage");
+  },
+  setSelectedUser: (user) => {
+    localStorage.setItem("selectedUserChatApp", JSON.stringify(user));
+    set({ selectedUser: user });
+  },
 }));

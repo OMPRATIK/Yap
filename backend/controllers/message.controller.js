@@ -2,6 +2,8 @@ import { StatusCodes } from "http-status-codes";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
 import cloudianry from "../utils/cloudinary.util.js";
+import { getRecieverSocketId, io } from "../socket.js";
+
 export const getUsers = async (req, res) => {
   const loggedInUserId = req.user._id;
 
@@ -42,6 +44,12 @@ export const sendMessage = async (req, res) => {
     text,
     image: imageUrl,
   });
+
+  const receiverSocketId = getRecieverSocketId(receiverId);
+  console.log(receiverSocketId);
+  if (receiverSocketId) {
+    io.to(receiverSocketId).emit("newMessage", newMessage);
+  }
 
   res.status(StatusCodes.CREATED).json(newMessage);
 };

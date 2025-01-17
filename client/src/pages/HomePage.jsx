@@ -5,7 +5,6 @@ import NoSelectedChat from "../ui/NoSelectedChat";
 
 function HomePage() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
-
   const { userId } = useParams();
 
   useEffect(function () {

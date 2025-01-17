@@ -15,10 +15,10 @@ function ProfilePage() {
       await updateProfile({ profilePic: base64Image });
     };
   }
-
+  console.log(authUser);
   return (
     <div className="flex-grow">
-      <div className="px-4 py-6">
+      <div className="px-4 py-4">
         <div className="p-4 sm:p-6 bg-base-300 space-y-4 rounded-md sm:max-w-2xl mx-auto">
           <div className="space-y-1">
             <h1 className="text-2xl font-bold text-center sm:text-start">
@@ -112,7 +112,7 @@ function ProfilePage() {
             <div className="space-y-1">
               <div className="flex justify-between">
                 <h4 className="opacity-75 text-sm">Yapper Since</h4>{" "}
-                <p className="text-sm">14-10-2024</p>
+                <p className="text-sm">{authUser.createdAt?.split("T")[0]}</p>
               </div>
               <div className="flex justify-between">
                 <h4 className="opacity-7 text-sm">Account Status</h4>{" "}

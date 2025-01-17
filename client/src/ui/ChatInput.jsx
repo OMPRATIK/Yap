@@ -43,7 +43,7 @@ function ChatInput() {
   }
 
   return (
-    <div className="w-full space-y-2 py-2 sm:px-4 px-1 relative">
+    <div className="w-full space-y-2 py-0 sm:py-2 sm:px-4 px-1 relative">
       <div className="flex justify-between">
         {imagePreview && (
           <div className="">
