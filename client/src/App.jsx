@@ -13,9 +13,8 @@ import Layout from "./ui/Layout";
 import Chat from "./ui/Chat";
 
 function App() {
-  const { authUser, onlineUsers } = useAuthStore();
+  const { authUser } = useAuthStore();
   const { theme } = useThemeStore();
-  console.log(onlineUsers);
   return (
     <div data-theme={theme}>
       <Routes>

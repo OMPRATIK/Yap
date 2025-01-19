@@ -12,12 +12,18 @@ function ChatList() {
   const { onlineUsers } = useAuthStore();
   const { userId } = useParams();
 
+  const [search, setSearch] = useState("");
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
   const [isContactListOpen, setIsContactListOpen] = useState(true);
 
-  const filteredList = showOnlineOnly
+  let filteredList = showOnlineOnly
     ? users.filter((user) => onlineUsers.includes(user._id))
     : users;
+
+  if (search)
+    filteredList = filteredList.filter((user) =>
+      user.fullName.toLowerCase().includes(search.toLowerCase())
+    );
 
   const noUsers = filteredList.length === 0;
 
@@ -32,7 +38,7 @@ function ChatList() {
   );
 
   return (
-    <aside className="space-y-2 pb-28 w-full sm:w-[240px] border-r-[1px] border-base-200">
+    <aside className="space-y-2 pb-28 w-full sm:w-[240px] md:w-[300px] border-r-[1px] border-base-200">
       <div className="rounded-md bg-base-100 flex items-center justify-center gap-1.5 p-2 w-full">
         <button
           className={`border-b-[1px] border-base-100 flex items-center justify-center gap-1 w-full py-1 ${
@@ -79,60 +85,73 @@ function ChatList() {
       </div>
 
       <div className="scrollbar-thin scrollbar-thumb-neutral/50 scrollbar-track-base-100 flex flex-col gap-1.5 h-full overflow-y-scroll pl-2">
+        <div className="py-1 px-3">
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="input w-full input-bordered input-sm"
+            placeholder="Search Yappers..."
+          />
+        </div>
         {isUsersLoading ? (
           <ChatListSkeleton />
         ) : isContactListOpen ? (
           noUsers ? (
             <div className="flex items-center justify-center h-full opacity-50">
-              No Yappers online 🥲
+              No Result 🥲
             </div>
           ) : (
-            filteredList.map((user) => (
-              <button
-                className={`w-full pl-3 text-start flex gap-1.5 py-3 rounded-tl-md rounded-bl-md hover:bg-base-200 transition-colors duration-300 ${
-                  user._id === userId && "bg-base-200"
-                }`}
-                key={user._id}
-                onClick={() => {
-                  navigate(`/${user._id}`);
-                  setSelectedUser(user);
-                }}
-              >
-                {user.profilePic ? (
-                  <div className="relative">
-                    <div
-                      className={`size-3 absolute ${
-                        onlineUsers.includes(user._id)
-                          ? "bg-green-500"
-                          : "bg-red-500"
-                      } top-0 right-0 rounded-full border-[1px]`}
-                    />
-                    <div className="overflow-hidden size-10 rounded-full ">
-                      <img
-                        src={user.profilePic}
-                        alt={user.fullName + "pic"}
-                        className="rounded-full w-10"
+            <div className="space-y-1">
+              {filteredList.map((user) => (
+                <button
+                  className={`w-full pl-3 text-start flex gap-1.5 py-3 rounded-tl-md rounded-bl-md hover:bg-base-200 transition-colors duration-300 ${
+                    user._id === userId && "bg-base-200"
+                  }`}
+                  key={user._id}
+                  onClick={() => {
+                    navigate(`/${user._id}`);
+                    setSelectedUser(user);
+                  }}
+                >
+                  {user.profilePic ? (
+                    <div className="relative">
+                      <div
+                        className={`size-3 absolute ${
+                          onlineUsers.includes(user._id)
+                            ? "bg-green-500"
+                            : "bg-red-500"
+                        } top-0 right-0 rounded-full border-[1px]`}
                       />
+                      <div className="overflow-hidden size-10 rounded-full ">
+                        <img
+                          src={user.profilePic}
+                          alt={user.fullName + "pic"}
+                          className="rounded-full w-10"
+                        />
+                      </div>
                     </div>
+                  ) : (
+                    <div className="relative">
+                      <div
+                        className={`z-50 size-3 absolute ${
+                          onlineUsers.includes(user._id)
+                            ? "bg-green-500"
+                            : "bg-red-500"
+                        } top-0 right-0 rounded-full border-[1px]`}
+                      />
+                      <DefaultProfilePic fullName={user.fullName} type="nav" />
+                    </div>
+                  )}
+                  <div>
+                    <p className="">{user.fullName}</p>
+                    <p className="text-xs opacity-55">
+                      {onlineUsers.includes(user._id) ? "Online" : "Offline"}
+                    </p>
                   </div>
-                ) : (
-                  <div className="relative">
-                    <div
-                      className={`z-50 size-3 absolute ${
-                        onlineUsers.includes(user._id)
-                          ? "bg-green-500"
-                          : "bg-red-500"
-                      } top-0 right-0 rounded-full border-[1px]`}
-                    />
-                    <DefaultProfilePic fullName={user.fullName} type="nav" />
-                  </div>
-                )}
-                <div>
-                  <p className="">{user.fullName}</p>
-                  <p className="text-xs">Online</p>
-                </div>
-              </button>
-            ))
+                </button>
+              ))}{" "}
+            </div>
           )
         ) : (
           <div></div>

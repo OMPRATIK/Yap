@@ -9,7 +9,9 @@ export const getUsers = async (req, res) => {
 
   const filteredUsers = await User.find({
     _id: { $ne: loggedInUserId },
-  }).select("-password");
+  })
+    .select("-password")
+    .sort({ updatedAt: -1 });
 
   res.status(StatusCodes.OK).json(filteredUsers);
 };
@@ -46,9 +48,11 @@ export const sendMessage = async (req, res) => {
   });
 
   const receiverSocketId = getRecieverSocketId(receiverId);
+  const senderSocketId = getRecieverSocketId(senderId);
 
-  if (receiverSocketId) {
+  if (receiverSocketId && senderSocketId) {
     io.to(receiverSocketId).emit("newMessage", newMessage);
+    io.to(senderSocketId).emit("newMessage", newMessage);
   }
 
   res.status(StatusCodes.CREATED).json(newMessage);

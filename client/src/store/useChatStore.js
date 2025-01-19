@@ -23,7 +23,7 @@ export const useChartStore = create((set, get) => ({
       set({ isUsersLoading: false });
     }
   },
-
+  setUsers: (users) => set({ users }),
   getMessages: async (userId) => {
     set({ isMessagesLoading: true });
     try {
