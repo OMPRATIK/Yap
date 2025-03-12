@@ -8,7 +8,12 @@ import cloudianry from "../utils/cloudinary.util.js";
 
 export const signup = async (req, res, next) => {
   const { fullName, email, password } = req.body;
-  const newUser = await User.create({ fullName, email, password });
+  const newUser = await User.create({
+    fullName: fullName.trim(),
+    email: email.trim(),
+    password,
+  });
+
   createToken(newUser._id, res);
   res.status(StatusCodes.CREATED).json({
     _id: newUser._id,

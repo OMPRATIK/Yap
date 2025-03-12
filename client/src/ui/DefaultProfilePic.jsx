@@ -1,4 +1,5 @@
 function DefaultProfilePic({ fullName, type }) {
+  fullName = fullName.trim();
   return (
     <div className="avatar placeholder">
       <div
