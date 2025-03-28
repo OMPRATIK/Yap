@@ -26,7 +26,7 @@ https://github.com/user-attachments/assets/e7e1c35a-ca7a-4579-bdc1-4a88af88e6a5
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/OMPRATIK/SpeakX
+   git clone https://github.com/OMPRATIK/Yap
    ```
 2. **Create `.env` file in server directory and fill the details**
     ```env
