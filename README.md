@@ -1,6 +1,6 @@
 # 🚀 Yap - Real-Time Chat Application 
-Link🔗: https://yap-ddgx.onrender.com/
-A feature-rich MERN stack chat application with real-time messaging, 32 customizable themes, and optimized performance.
+- A feature-rich MERN stack chat application with real-time messaging, 32 customizable themes, and optimized performance.
+- Link🔗: https://yap-ddgx.onrender.com/
 ## Demo
 https://github.com/user-attachments/assets/e7e1c35a-ca7a-4579-bdc1-4a88af88e6a5
 
