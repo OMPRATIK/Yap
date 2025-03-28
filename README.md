@@ -49,7 +49,7 @@ https://github.com/user-attachments/assets/e7e1c35a-ca7a-4579-bdc1-4a88af88e6a5
    ```
 ## Conclusion
 Yap isn’t just another chat app—it’s a high-performance, customizable communication platform that demonstrates:
-✅ Modern MERN stack mastery (React + Node.js + WebSockets)
-✅ State management optimization (Zustand > Redux)
-✅ UI/UX best practices (90+ accessibility score)
-✅ Scalable backend design
+- ✅ Modern MERN stack mastery (React + Node.js + WebSockets)
+- ✅ State management optimization (Zustand > Redux)
+- ✅ UI/UX best practices (90+ accessibility score)
+- ✅ Scalable backend design
