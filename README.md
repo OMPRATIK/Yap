@@ -43,7 +43,7 @@ https://github.com/user-attachments/assets/e7e1c35a-ca7a-4579-bdc1-4a88af88e6a5
     
     NODE_ENV=development
      ```
-3. ** Build and start the application**
+3. **Build and start the application**
       ```bash
      npm run build 
      npm run start
